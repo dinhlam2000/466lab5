@@ -55,9 +55,12 @@ def textVectorizer2(dirname, stop_list):
     # set of words found to avoid duplicates
     words = set()
     documents = {}
-
     tf_documents = {}
-    idf_documents = {}
+
+    stop_word_file = sys.argv[2].split('/')[1].replace('.txt', '')
+    tf_idf_out = sys.argv[1] + '_tf_idf_' + stop_word_file + '.csv'
+    words_out = sys.argv[1] + '_words_' + stop_word_file + '.csv'
+
 
     for authorname in os.listdir(dirname):
         folderdir = ''.join((dirname, '/', authorname))
@@ -104,13 +107,13 @@ def textVectorizer2(dirname, stop_list):
 
 
     #compute idf and create a words file at the same time
-    with open('words.csv', 'w') as f:
+    with open(words_out, 'w') as f:
         for word, occurence in documents_word.items():
             idf[word] = log(total_documents /  occurence)
             f.write(word + ',')
 
     #output tf*idf
-    with open('tf_idf.csv', 'w') as f:
+    with open(tf_idf_out, 'w') as f:
         for document, tf_words in tf_documents.items():
             f.write(document + ',')
             for word, tf_value in tf_words.items():
