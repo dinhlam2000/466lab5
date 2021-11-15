@@ -64,8 +64,8 @@ def textVectorizer2(dirname, stop_list):
 
     for authorname in os.listdir(dirname):
         folderdir = ''.join((dirname, '/', authorname))
-        token_map = defaultdict(int)
         for filename in os.listdir(folderdir):
+            token_map = defaultdict(int)
             # building ground_truth list
             truth_line = ','.join((filename, authorname))
             ground_truth.append(truth_line)
@@ -87,7 +87,8 @@ def textVectorizer2(dirname, stop_list):
                         words.add(token)
                         token_map[token] += 1
 
-        documents[authorname] = token_map
+
+            documents[filename] = token_map
 
     # import pdb; pdb.set_trace()
     total_documents = len(documents)
